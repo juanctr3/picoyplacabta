@@ -1,0 +1,28 @@
+# robots.txt - Pico y Placa Colombia
+# Permite a todos los buscadores rastrear el sitio
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Disallow: /temp/
+
+# Optimización de rastreo
+Crawl-delay: 0
+
+# Sitemap
+Sitemap: https://pico-y-placa-colombia.com/sitemap.xml
+
+# Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Meta
+User-agent: facebookexternalhit
+Allow: /

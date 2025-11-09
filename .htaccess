@@ -1,0 +1,169 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    
+    # ==========================================
+    # HTTPS Y REDIRECCIONES DE DOMINIO
+    # ==========================================
+    
+    # Forzar HTTPS
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    
+    # Redirecciones de dominio
+    RewriteCond %{HTTP_HOST} ^www\.picoyplacabogota\.com$ [NC]
+    RewriteRule ^(.*)$ https://picoyplacabogota.com.co/$1 [R=301,L]
+    
+    RewriteCond %{HTTP_HOST} ^picoyplacabogota\.com$ [NC]
+    RewriteRule ^(.*)$ https://picoyplacabogota.com.co/$1 [R=301,L]
+    
+    RewriteCond %{HTTP_HOST} ^www\.picoyplacabogota\.com\.co$ [NC]
+    RewriteRule ^(.*)$ https://picoyplacabogota.com.co/$1 [R=301,L]
+    
+    # ==========================================
+    # BLOG - NOTICIAS (PRIORITARIO)
+    # ==========================================
+    
+    # Sitemap de noticias
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^noticias/sitemap\.xml$ blog/noticias-sitemap.php [L,QSA]
+    
+    # Artículo individual: /noticias/titulo-slug (URL AMIGABLE)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^noticias/([a-z0-9-]+)/?$ noticias/index.php?slug=$1 [L,QSA]
+    
+    # Listado de noticias con filtro: /noticias/?categoria=xyz
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^noticias/?$ noticias/index.php [L,QSA]
+    
+    # ==========================================
+    # SITIO PRINCIPAL - PICO Y PLACA
+    # ==========================================
+    
+    # Sitemap principal
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^sitemap\.xml$ sitemap.xml.php [L]
+    
+    # URLs dinámicas de pico y placa
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^pico-y-placa/([0-9]{4})-([0-9]{2})-([0-9]{2})-([a-z]+)/?$ index.php?date=$1-$2-$3&city=$4 [L,QSA]
+    
+    # ==========================================
+    # ARCHIVOS REALES (NO REESCRIBIR)
+    # ==========================================
+    
+    # Proteger carpetas sensibles
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(blog|noticias|admin|config)/ - [L]
+    
+    # ==========================================
+    # CATCH-ALL - TODO LO DEMÁS A INDEX.PHP
+    # ==========================================
+    
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php [L,QSA]
+    
+</IfModule>
+
+# ==========================================
+# COMPRESIÓN GZIP
+# ==========================================
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE application/xml
+</IfModule>
+
+# ==========================================
+# CACHÉ - MEJORADO
+# ==========================================
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 7 days"
+    
+    # HTML - No cachear mucho (cambios frecuentes)
+    ExpiresByType text/html "access plus 1 hour"
+    
+    # CSS y JS - Cachear 30 días
+    ExpiresByType text/css "access plus 30 days"
+    ExpiresByType text/javascript "access plus 30 days"
+    ExpiresByType application/javascript "access plus 30 days"
+    ExpiresByType application/x-javascript "access plus 30 days"
+    
+    # Imágenes - Cachear 60 días
+    ExpiresByType image/jpeg "access plus 60 days"
+    ExpiresByType image/gif "access plus 60 days"
+    ExpiresByType image/png "access plus 60 days"
+    ExpiresByType image/webp "access plus 60 days"
+    ExpiresByType image/svg+xml "access plus 60 days"
+    ExpiresByType image/x-icon "access plus 60 days"
+    
+    # Fuentes - Cachear 1 año
+    ExpiresByType font/ttf "access plus 1 year"
+    ExpiresByType font/otf "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    
+    # JSON, XML - Cachear 1 día
+    ExpiresByType application/json "access plus 1 day"
+    ExpiresByType application/xml "access plus 1 day"
+</IfModule>
+
+# ==========================================
+# HEADERS DE SEGURIDAD
+# ==========================================
+
+<IfModule mod_headers.c>
+    # Evitar MIME type sniffing
+    Header set X-Content-Type-Options "nosniff"
+    
+    # Clickjacking protection
+    Header set X-Frame-Options "SAMEORIGIN"
+    
+    # XSS Protection
+    Header set X-XSS-Protection "1; mode=block"
+    
+    # Referrer Policy
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # Agregar vary para compresión
+    Header append Vary Accept-Encoding
+</IfModule>
+
+# ==========================================
+# SEGURIDAD ADICIONAL
+# ==========================================
+
+# Bloquear acceso directo a archivos sensibles
+<FilesMatch "\.(env|json|lock|sql)$">
+    Deny from all
+</FilesMatch>
+
+# Permitir solo archivos específicos
+<FilesMatch "\.(jpg|jpeg|png|gif|pdf|css|js|txt|xml|svg|woff|woff2|ttf|otf)$">
+    Allow from all
+</FilesMatch>
+
+# Deshabilitar listado de directorios
+Options -Indexes
+
+# ==========================================
+# CODIFICACIÓN
+# ==========================================
+
+AddDefaultCharset UTF-8
+AddType 'text/html; charset=UTF-8' html htm

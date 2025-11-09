@@ -1,0 +1,105 @@
+{
+  "name": "Pico y PL - Pico y Placa Colombia",
+  "short_name": "Pico y PL",
+  "description": "Consulta en tiempo real qué placas tienen restricción hoy en Bogotá, Medellín y Cali",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#667eea",
+  "lang": "es-CO",
+  "dir": "ltr",
+  
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%23667eea' width='192' height='192'/><text x='50%' y='50%' font-size='120' font-weight='bold' text-anchor='middle' dy='.3em' fill='white' font-family='Arial'>🚗</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect fill='%23667eea' width='512' height='512'/><text x='50%' y='50%' font-size='320' font-weight='bold' text-anchor='middle' dy='.3em' fill='white' font-family='Arial'>🚗</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%23667eea' width='192' height='192' rx='45'/><text x='50%' y='50%' font-size='120' font-weight='bold' text-anchor='middle' dy='.3em' fill='white' font-family='Arial'>🚗</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 540 720'><rect fill='%23667eea' width='540' height='720'/><text x='50%' y='100' font-size='48' font-weight='bold' text-anchor='middle' fill='white'>Pico y PL</text><text x='50%' y='400' font-size='80' text-anchor='middle' fill='white'>🚗</text></svg>",
+      "sizes": "540x720",
+      "type": "image/svg+xml",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720'><rect fill='%23667eea' width='1280' height='720'/><text x='640' y='100' font-size='48' font-weight='bold' text-anchor='middle' fill='white'>Pico y PL</text><text x='640' y='400' font-size='80' text-anchor='middle' fill='white'>🚗</text></svg>",
+      "sizes": "1280x720",
+      "type": "image/svg+xml",
+      "form_factor": "wide"
+    }
+  ],
+  
+  "categories": ["utilities", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Consultar Pico y Placa Bogotá",
+      "short_name": "Bogotá",
+      "description": "Abre Pico y PL en Bogotá",
+      "url": "/?city=bogota",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><rect fill='%23667eea' width='96' height='96' rx='20'/><text x='48' y='48' font-size='60' text-anchor='middle' dy='.3em' fill='white'>🏙</text></svg>",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Consultar Pico y Placa Medellín",
+      "short_name": "Medellín",
+      "description": "Abre Pico y PL en Medellín",
+      "url": "/?city=medellin",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><rect fill='%23764ba2' width='96' height='96' rx='20'/><text x='48' y='48' font-size='60' text-anchor='middle' dy='.3em' fill='white'>🏔</text></svg>",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Consultar Pico y Placa Cali",
+      "short_name": "Cali",
+      "description": "Abre Pico y PL en Cali",
+      "url": "/?city=cali",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><rect fill='%23764ba2' width='96' height='96' rx='20'/><text x='48' y='48' font-size='60' text-anchor='middle' dy='.3em' fill='white'>☀️</text></svg>",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ],
+  
+  "share_target": {
+    "action": "/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  
+  "prefer_related_applications": false
+}
